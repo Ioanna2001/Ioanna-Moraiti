@@ -1,0 +1,54 @@
+* {
+    font-family: Calibri;
+    width: 100%;
+    margin: 0%;
+    color: white;
+}
+p {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+a {
+    background: rgb(248, 242, 242);
+    color: blue;
+}
+
+nav {
+    background: red;
+    height: 6vh;
+    padding: 0.5rem;
+}
+
+header {
+    background: #000;
+    height: 7.5vh;
+}
+
+.logo {
+    background: orange;
+    width: 2.5rem;
+    padding: 0.3rem; 
+    text-align: end;
+    height: 9vh;   
+}
+
+.obst {
+    background: rgb(184, 182, 182);
+    padding: 0.5rem;
+}
+
+.obst .kirschen {
+    color: #000;
+}
+
+.drinks {
+    background: gray;
+    padding: 0.5rem;
+}
+
+footer {
+    padding: 0.5rem;
+    background: orange;
+    height: 10vh;
+}
