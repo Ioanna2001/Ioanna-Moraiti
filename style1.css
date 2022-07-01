@@ -1,0 +1,14 @@
+.mainnavigation ul{
+    background-color: orange;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.mainnavigation>ul li>ul{
+    background-color: green;
+    display: none;
+    padding-left: 2vw;
+}
+.mainnavigation>ul li:hover>ul{
+    display: block;
+}

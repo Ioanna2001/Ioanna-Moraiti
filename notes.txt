@@ -1,0 +1,8 @@
+Notes 01/07/2022
+How to upload a website to the internet:
+	>Server
+	>Ci/CD (continious integration continious delivery): We push the contents of our repo to a server (git provides a server, a git page). 
+	 When we type the link the automatic respnse is to go to the index page. Settings>Pages>branch:main>/root>save
+*if we want to create hierarcchy in our body element we can use nav (more than one) with the first one being th emost imoortant and ul
+*.classname>ul: The direct ul child of class classname
+*.classname ul: all the unsorted lists not just the direct child
