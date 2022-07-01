@@ -1,3 +1,4 @@
+ss22
 Notes 01/07/2022
 How to upload a website to the internet:
 	>Server
@@ -6,3 +7,15 @@ How to upload a website to the internet:
 *if we want to create hierarcchy in our body element we can use nav (more than one) with the first one being th emost imoortant and ul
 *.classname>ul: The direct ul child of class classname
 *.classname ul: all the unsorted lists not just the direct child
+
+Animation: 
+	>@ in css declares a condition
+	@keyframes:
+	>then you add animatio-.. attributes to css elements
+*relative postition: the child is positioned according to the mother frame
+*absolute position: the element is positioned according to the highest relative element
+<picture>: we specify different sources for different widths etc.
+<video>: works the same way as picture, with mp4, ogg(chrome etc.)
+<audio>: works the same way
+*z-index: what element goes on top and what video goes on the bottom (from -1...)
+*pointer-events: set it so the mouse can touch it or not
