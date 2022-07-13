@@ -19,3 +19,24 @@ Animation:
 <audio>: works the same way
 *z-index: what element goes on top and what video goes on the bottom (from -1...)
 *pointer-events: set it so the mouse can touch it or not
+
+8/07/2022
+3D Enviroments: A Frame
+<a-scene>: A 3D screen
+		attributes: physics
+		antialias
+		shadow
+		coursor
+		fog
+<a-entity>: groups elements and you can add collective attributes
+<a-light>: type, color intensity, penumbra, distance, decay, color
+<a-box>:position (x,y,z) rotation, color
+<a-spere>
+<a-cylinder>
+<a-plane>
+<a-sky>
+Animation is added to elements (a frame animation)
+To add texture we download a picture with the texture we want, we add it to assets under an id and then we add it to our entity with the material attribute
+*static-body: object is affected by gravity
+*We add all images, texture, videos under <a-assets> tage
+*Javascript only has acces to the browser (sandbox) so you need a server(download mamp and set at the server tab the root forlder -for example the lessons foleder)
