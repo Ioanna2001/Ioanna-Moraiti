@@ -34,9 +34,21 @@ Animation:
 <a-spere>
 <a-cylinder>
 <a-plane>
-<a-sky>
+<a-sky>		
 Animation is added to elements (a frame animation)
 To add texture we download a picture with the texture we want, we add it to assets under an id and then we add it to our entity with the material attribute
 *static-body: object is affected by gravity
 *We add all images, texture, videos under <a-assets> tage
 *Javascript only has acces to the browser (sandbox) so you need a server(download mamp and set at the server tab the root forlder -for example the lessons foleder)
+
+15/7/2022
+"Javascript"
+DOM: DocumentObjectModel. With javascript we can change the dom model.
+<script>: Write js inside html
+console.log: built in function that writes things inside our console
+document: Holds ths whole dom (the body of HTML)
+	>querySelector(#id): chooses the dom id where it is perfoming the action
+		>addEventListener('click', function (evt) {...})
+let element = document.querySelector(#id): store the element we specified in a variable
+AFRAME (component): INSIDE THE HEAD. We store different methods 
+

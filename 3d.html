@@ -1,7 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v5.0.0/dist/aframe-extras.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.3.0/dist/aframe-physics-system.min.js"></script>
+    <script>
+        AFRAME.registerComponent('play-on-click', {
+            init: function () {
+                console.log('init video player');
+                this.onClick = this.onClickEvent.bind(this);
+                this.el.addEventListener('click', this.onClickEvent);
+            },
+            onClickEvent: function (evt) {
+                    var videoEl = this.getAttribute('material').src;
+                        console.log('play');
+                        videoEl.play(); 
+            }
+        });
+    </script>
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <title>My Room</title>
 </head>
 <body>
@@ -17,133 +35,144 @@
             <img id="Wall_NRM" src="images/TexturesCom_Wall_Stucco4_2x2_512_normal.jpg">
             <img id="Floor" src="images/TexturesCom_VersaillesParquet10_512_albedo.jpg">
             <img id="Floor_NRM" src="images/TexturesCom_VersaillesParquet10_512_normal.jpg">
-            <img id="Poster" src="images/poster.jpg">
+            <video id="Water_Reflection" src="images/pexels-shvets-production-8928431.mp4" preload="auto" loop="true" autoplay="false" crossOrigin="anonymous" muted>
         </a-assets>
 
         <!--Sky-->
         <a-sky material="src: #Sunset_sky">
         </a-sky>
 
-        <!--Floor-->
-        <a-plane material="color: #FFFFFF;
-                           src: #Floor;
-                           repeat: 5 5;
-                           normal-map: #Floor_NRM;
-                           normal-texture-repeat: 5 5;
-                           normal-scale: 1 -1;
-                           roughness: 0.1;
-                           "
-                 scale="100 100 1"
-                 rotation="-90 0 0"
-                 position="0 -10 0">
-        </a-plane>
+        <!--House-->
+        <a-entity id="green-room">
+            <!--Floor-->
+            <a-entity id="floor">
+                <a-plane material="color: #FFFFFF;
+                               roughness: 0.1;"
+                        scale="100 100 1"
+                        rotation="-90 0 0"
+                        position="0 -10 0">
+                </a-plane>
+                <a-video id="water_video" src="#Water_Reflection"
+                        material="color: #FFFFFF;
+                                  roughness: 0.1;"
+                        rotation="-90 0 90"
+                        position="0 -9 0"
+                        muted
+                        scale="26.04 46.29 1"
+                        width="3.84"
+                        height="2.16"
+                        play-on-click
+                        autoplay="false">
+                </a-video>
+            </a-entity>
 
-        <!--Walls-->
-        <a-box width="100"
-               height="50"
-               depth="0.1"
-               position="0 15 -50"
-               material="src: #Wall;
-                         repeat: 5 5;
-                         normal-map: #Wall_NRM;
-                         color: #257d5a;
-                         normal-texture-repeat: 5 5;
-                         roughness: 0.9;
-                         normal-scale: 1 -1">
-        </a-box>
-        <a-box width="100"
-               height="50"
-               depth="0.1"
-               position="0 15 50"
-               material="src: #Wall;
-                         repeat: 5 5;
-                         color: #257d5a;
-                         normal-texture-repeat: 5 5;
-                         roughness: 0.9;
-                         normal-map: #Wall_NRM;
-                         normal-texture-repeat: 5 5">
-        </a-box>
-        <a-box width="100"
-        height="50"
-        depth="0.1"
-        rotation="0 90 0"
-        position="50 15 0"
-        color="#154733">
-        </a-box>
+            <!--Walls-->
+            <a-box width="100"
+            height="50"
+            depth="0.1"
+            position="0 15 -50"
+            material="src: #Wall;
+                repeat: 5 5;
+                normal-map: #Wall_NRM;
+                color: #257d5a;
+                normal-texture-repeat: 5 5;
+                roughness: 0.9;
+                normal-scale: 1 -1">
+            </a-box>
+            <a-box width="100"
+            height="50"
+            depth="0.1"
+            position="0 15 50"
+            material="src: #Wall;
+                repeat: 5 5;
+                color: #257d5a;
+                normal-texture-repeat: 5 5;
+                roughness: 0.9;
+                normal-map: #Wall_NRM;
+                normal-texture-repeat: 5 5">
+            </a-box>
+            <a-box width="100"
+            height="50"
+            depth="0.1"
+            rotation="0 90 0"
+            position="50 15 0"
+            color="#154733">
+            </a-box>
 
-        <!--Window wall-->
-        <a-box width="100"
-        height="15"
-        depth="0.1"
-        rotation="0 90 0"
-        position="-50 -2.5 0"
-        color="#154733">
-        </a-box>
-        <a-box width="100"
-        height="10"
-        depth="0.1"
-        rotation="0 90 0"
-        position="-50 35 0"
-        color="#154733">
-        </a-box>
-        <!--Window Seperators-->
-        <a-box width="5"
-        height="30"
-        depth="0.1"
-        rotation="0 90 0"
-        position="-50 15 0"
-        color="#154733">
-        </a-box>
-        <a-box width="5"
-        height="50"
-        depth="0.1"
-        rotation="0 90 0"
-        position="-50 15 47.5"
-        color="#154733">
-        </a-box>
-        <a-box width="5"
-        height="50"
-        depth="0.1"
-        rotation="0 90 0"
-        position="-50 15 -47.5"
-        color="#154733">
-        </a-box>
-        <!--Window self-->
-        <a-box width="5"
-        height="45"
-        depth="1"
-        rotation="90 0 0"
-        position="-47.5 4 -24"
-        color="#a1c2b5">
-        </a-box>
-        <!--Window self-->
-        <a-box width="5"
-        height="45"
-        depth="1"
-        rotation="90 0 0"
-        position="-47.5 4 24"
-        color="#a1c2b5">
-        </a-box>
+            <!--Window wall-->
+            <a-box width="100"
+            height="15"
+            depth="0.1"
+            rotation="0 90 0"
+            position="-50 -2.5 0"
+            color="#154733">
+            </a-box>
+            <a-box width="100"
+            height="10"
+            depth="0.1"
+            rotation="0 90 0"
+            position="-50 35 0"
+            color="#154733">
+            </a-box>
+            <!--Window Seperators-->
+            <a-box width="5"
+            height="30"
+            depth="0.1"
+            rotation="0 90 0"
+            position="-50 15 0"
+            color="#154733">
+            </a-box>
+            <a-box width="5"
+            height="50"
+            depth="0.1"
+            rotation="0 90 0"
+            position="-50 15 47.5"
+            color="#154733">
+            </a-box>
+            <a-box width="5"
+            height="50"
+            depth="0.1"
+            rotation="0 90 0"
+            position="-50 15 -47.5"
+            color="#154733">
+            </a-box>
+            <!--Window self-->
+            <a-box width="5"
+            height="45"
+            depth="1"
+            rotation="90 0 0"
+            position="-47.5 4 -24"
+            color="#a1c2b5">
+            </a-box>
+            <!--Window self-->
+            <a-box width="5"
+            height="45"
+            depth="1"
+            rotation="90 0 0"
+            position="-47.5 4 24"
+            color="#a1c2b5">
+            </a-box>
 
-        <!--Ceiling-->
-        <a-light type="point" 
-                 intensity="0.5"
-                 position="0 10 0">
-        </a-light>
-        <a-box width="100"
-        height="100"
-        depth="0.1"
-        rotation="90 0 0"
-        position="0 40 0"
-        color="#154733">
+            <!--Ceiling-->
+            <a-light type="point" 
+            intensity="0.5"
+            position="0 10 0">
+            </a-light>
+            <a-box width="100"
+            height="100"
+            depth="0.1"
+            rotation="90 0 0"
+            position="0 40 0"
+            color="#154733">
             <!--Light-->
             <a-light type="ambient"
-                     intensity="1.3">
+            intensity="1.3">
             </a-light>
-        </a-box>
-
+            </a-box>
+        </a-entity>
+    
         <!--Bed-->
-        <a-entity position="0 0 -35">
+        <a-entity id="bed" position="0 0 -35">
             <!--Base Front-->
             <!--Outer Rails-->
             <a-cylinder material="color: #000000;"
@@ -277,61 +306,32 @@
             </a-box>
         </a-entity>
 
-        <!--Pillow-->
-        <a-entity>
-            <!--
-            <a-curvedimage material="src: #Pillow;
-                                     repeat: 5 5;
-                                     color: #FFFFFF;
-                                     normal-map: #Pillow_NRM;
-                                     normal-texture-repeat: 5 5;"
-                                     theta-length="85"
-                                     radius="4"
-                                     height="3"
-                                     rotation="0 0 0">
-            </a-curvedimage>
-            <a-curvedimage material="src: #Pillow;
-                                     repeat: 5 5;
-                                     normal-map: #Pillow_NRM;
-                                     normal-texture-repeat: 5 5;"
-                                     theta-length="85"
-                                     radius="4"
-                                     height="3"
-                                     rotation="0 180 0"
-                                     position="3.97 0 4.4">
-            </a-curvedimage>
-            -->
-        </a-entity>
-
-        <!--Poster-->
-        <a-image material="src: #Poster;"
-               width="1.89"
-               height="2.67"
-               scale="8 8 1"
-               position="-5 10 -49.5">
-        </a-image>
-
-        <!--Disco Ball-->
-        <a-sphere material="src: #Sci_Fi;
-                            normal-map: #Sci_Fi_NRM;
-                            color: #948ca3;
-                            repeat: 5 5;
-                            normal-texture-repeat: 5 5;
-                            roughness: 0.1;
-                            normal-scale: 1 -1"
-                  animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
-                  position="0 25 0"
-                  scale="5 5 5">
-        </a-sphere>
-
-        <!--Library-->
-        <a-entity>
+         <!--Library
+         <a-entity id="library">
             <a-box height="35"
                    width="15"
                    depth="5"
                    material="color: #827965;"
-                   position="35 5 -42.5">
+                   position="35 5 -42.5"
+                   scale="1 -1 1">
             </a-box>
+        </a-entity>
+        -->
+        
+        <!--Pink Room-->
+        <a-entity id="pink-room" visible="false">
+            <!--Disco Ball-->
+            <a-sphere material="src: #Sci_Fi;
+            normal-map: #Sci_Fi_NRM;
+            color: #948ca3;
+            repeat: 5 5;
+            normal-texture-repeat: 5 5;
+            roughness: 0.1;
+            normal-scale: 1 -1"
+            animation="property: rotation; to: 0 360 0; loop: true; dur: 10000"
+            position="0 25 0"
+            scale="5 5 5">
+            </a-sphere>
         </a-entity>
     </a-scene>
 </body>
