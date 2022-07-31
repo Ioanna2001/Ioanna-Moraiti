@@ -1,27 +1,1095 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v5.0.0/dist/aframe-extras.min.js"></script>
     <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.3.0/dist/aframe-physics-system.min.js"></script>
     <script>
-        AFRAME.registerComponent('play-on-click', {
-            init: function () {
-                console.log('init video player');
-                this.onClick = this.onClickEvent.bind(this);
-                this.el.addEventListener('click', this.onClickEvent);
+        AFRAME.registerComponent('change-sound', {
+            schema: {
+                sound: {type: 'string', default:'#Sound_Normal'}
             },
-            onClickEvent: function (evt) {
-                    var videoEl = this.getAttribute('material').src;
-                        console.log('play');
-                        videoEl.play(); 
+            init: function () {
+                console.log('play sound');
+                this.el.addEventListener('click', function (evt) {
+                    console.log('clicked');
+                    let audio = document.querySelector('a-sound');
+                    audio.pause();
+                    audio.setAttribute('src', this.data.sound);
+                    audio.play();
+                    })
             }
         });
     </script>
-
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>My Project</title>
+    <title>Inside a Disco Ball</title>
 </head>
 <body>
+    <a-scene reflection="directionalLight:a-light#dirlight;">
+        <!--Asset Management System-->
+        <a-assets>
+            <img id="Sci_Fi" src="images/TexturesCom_Fabric_SciFi7_512_albedo.jpg">
+            <img id="Sci_Fi_NRM" src="images/TexturesCom_Fabric_SciFi7_512_normal.jpg">
+            <img id="Sci_Fi_Roughness" src="images/TexturesCom_Fabric_SciFi7_512_roughness.jpg">
+            <img id="Pillow" src="images/TexturesCom_Fabric_Cotton_512_albedo.jpg">
+            <img id="Pillow_NRM" src="images/TexturesCom_Fabric_Cotton_512_normal.jpg">
+            <img id="Pink_Sky" src="images/pink_sky.png">
+            <img id="Wall" src="images/TexturesCom_Wall_Stucco4_2x2_512_albedo.jpg">
+            <img id="Wall_NRM" src="images/TexturesCom_Wall_Stucco4_2x2_512_normal.jpg">
+            <img id="Floor" src="images/TexturesCom_VersaillesParquet10_512_albedo.jpg">
+            <img id="Floor_NRM" src="images/TexturesCom_VersaillesParquet10_512_normal.jpg">
+            <audio id="Sound_Normal" src="images/music_dave_miles_shades_of_orange.mp3" preload="auto" loop="true"></audio>
+            <audio id="Sound_Purple" src="images/zapsplat_fantasy_fairy_dust_twinkle_sparkle_bell_tree_lower_pitched_65543.mp3" preload="auto" loop="true"></audio>
+            <audio id="Sound_Pink" src="images/zapsplat_fantasy_fairy_dust_twinkle_sparkle_bell_tree_med_pitched_65545.mp3" preload="auto" loop="true"></audio>
+        </a-assets>
+
+        <!--Sky-->
+        <a-sky material="src: #Pink_Sky"
+               radius="30"
+               animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000">
+        </a-sky>
+        <a-sky  src="images/ezgif-1-1b2c09c510.mp4" material="repeat: 10 10">
+        </a-sky>
+
+        <!--Disco Ball-->
+        <a-entity id="disco_ball1">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #ffffff;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="0 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Normal">
+                            <a-sound id="audio1" src="#Sound_Normal" autoplay="true">
+                            </a-sound>                            
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #FFFFFF"
+                 position="0 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball Pink-->
+        <a-entity id="disco_ball2">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #F8BAD0;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="5 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Pink">
+                            <a-sound id="audio2" src="#Sound_Normal" autoplay="true">
+                            </a-sound>
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #F6528B"
+                 position="5 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>        
+
+        <!--Disco Ball Purple-->
+        <a-entity id="disco_ball3">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #E2BAF8;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="-5 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Purple">
+                            <a-sound id="audio3" src="#Sound_Normal" autoplay="true">
+                            </a-sound>
+
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #7C1BA2"
+                 position="-5 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball Purple-->
+        <a-entity position="0 5 4">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #E2BAF8;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="-5 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Purple">
+
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #7C1BA2"
+                 position="-5 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+        
+        <!--Disco Ball-->
+        <a-entity  position="2 3 4">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #ffffff;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="0 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Normal">
+
+                            
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #FFFFFF"
+                 position="0 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball Pink-->
+        <a-entity position="8 9 -7">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #F8BAD0;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="5 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Pink">
+
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #F6528B"
+                 position="5 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>        
+
+        <!--Disco Ball Purple-->
+        <a-entity position="-1 9 5">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #E2BAF8;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="-5 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Purple">
+
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #7C1BA2"
+                 position="-5 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball-->
+        <a-entity  position="-2 -3 4">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #ffffff;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="0 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Normal">
+
+                            
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #FFFFFF"
+                 position="0 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball Pink-->
+        <a-entity position="15 2 -1">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #F8BAD0;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="5 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Pink">
+
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #F6528B"
+                 position="5 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball Purple-->
+        <a-entity position="-15 -9 0">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #E2BAF8;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="-5 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Purple">
+
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #7C1BA2"
+                 position="-5 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball-->
+        <a-entity  position="2 3 10">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #ffffff;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="0 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Normal">
+
+                            
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #FFFFFF"
+                 position="0 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball Pink-->
+        <a-entity position="8 8 -1">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #F8BAD0;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="5 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Pink">
+
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #F6528B"
+                 position="5 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+         
+        <!--Disco Ball Purple-->
+        <a-entity position="8 8 -1">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #E2BAF8;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="-5 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Purple">
+
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #7C1BA2"
+                 position="-5 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball-->
+        <a-entity  position="-15 -9 0">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #ffffff;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="0 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Normal">
+
+                            
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #FFFFFF"
+                 position="0 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball Pink-->
+        <a-entity position="2 3 10">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #F8BAD0;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="5 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Pink">
+
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #F6528B"
+                 position="5 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball Purple-->
+        <a-entity position="8 8 -1">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #E2BAF8;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="-5 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Purple">
+
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #7C1BA2"
+                 position="-5 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball-->
+        <a-entity  position="-20 -19 0">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #ffffff;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="0 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Normal">
+
+                            
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #FFFFFF"
+                 position="0 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball Pink-->
+        <a-entity position="-10 3 -5">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #F8BAD0;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="5 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Pink">
+
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #F6528B"
+                 position="5 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball Purple-->
+        <a-entity position="0 18 -1">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #E2BAF8;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="-5 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Purple">
+
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #7C1BA2"
+                 position="-5 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball-->
+        <a-entity  position="20 19 7">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #ffffff;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="0 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Normal">
+
+                            
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #FFFFFF"
+                 position="0 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball Pink-->
+        <a-entity position="20 3 -5">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #F8BAD0;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="5 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Pink">
+
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #F6528B"
+                 position="5 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball Purple-->
+        <a-entity position="-10 -15 4">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #E2BAF8;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="-5 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Purple">
+
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #7C1BA2"
+                 position="-5 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+        
+        <!--Disco Ball-->
+        <a-entity  position="20 -6 19">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #ffffff;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="0 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Normal">
+
+                            
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #FFFFFF"
+                 position="0 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball Pink-->
+        <a-entity position="5 -23 7">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #F8BAD0;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="5 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Pink">
+
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #F6528B"
+                 position="5 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>        
+
+        <!--Disco Ball Purple-->
+        <a-entity position="1 19 17">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #E2BAF8;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="-5 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Purple">
+
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #7C1BA2"
+                 position="-5 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball-->
+        <a-entity  position="2 -3 4">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #ffffff;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="0 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Normal">
+
+                            
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #FFFFFF"
+                 position="0 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball Pink-->
+        <a-entity position="8 -14 -10">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #F8BAD0;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="5 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Pink">
+
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #F6528B"
+                 position="5 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball Purple-->
+        <a-entity position="-14 8 0">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #E2BAF8;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="-5 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Purple">
+
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #7C1BA2"
+                 position="-5 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball-->
+        <a-entity  position="1 -17 -11">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #ffffff;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="0 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Normal">
+
+                            
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #FFFFFF"
+                 position="0 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball Pink-->
+        <a-entity position="7 20 -1">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #F8BAD0;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="5 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Pink">
+
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #F6528B"
+                 position="5 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+         
+        <!--Disco Ball Purple-->
+        <a-entity position="2 -16 -1">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #E2BAF8;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="-5 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Purple">
+
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #7C1BA2"
+                 position="-5 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball-->
+        <a-entity  position="-24 9 10">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #ffffff;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="0 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Normal">
+
+                            
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #FFFFFF"
+                 position="0 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball Pink-->
+        <a-entity position="12 12 11">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #F8BAD0;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="5 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Pink">
+
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #F6528B"
+                 position="5 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball Purple-->
+        <a-entity position="8 8 25">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #E2BAF8;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="-5 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Purple">
+
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #7C1BA2"
+                 position="-5 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball-->
+        <a-entity  position="-20 -19 18">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #ffffff;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="0 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Normal">
+
+                            
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #FFFFFF"
+                 position="0 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball Pink-->
+        <a-entity position="10 -19 19">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #F8BAD0;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="5 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Pink">
+
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #F6528B"
+                 position="5 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball Purple-->
+        <a-entity position="19 1 17">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #E2BAF8;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="-5 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Purple">
+
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #7C1BA2"
+                 position="-5 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball-->
+        <a-entity  position="19 10 22">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #ffffff;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="0 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Normal">
+                            
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #FFFFFF"
+                 position="0 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Disco Ball Pink-->
+        <a-entity position="17 13 14">
+            <a-sphere material="src: #Sci_Fi;
+                           repeat: 5 5;
+                           normal-map: #Sci_Fi_NRM;
+                           normal-texture-repeat: 5 5;
+                           roughness: 0.5;
+                           color: #F8BAD0;
+                           normal-scale: 1 -1;
+                           metalness: 0.7;"
+                 position="5 0 -10"
+                 animation="property: rotation; 
+                            to: 0 360 0; 
+                            loop: true; 
+                            dur: 10000"
+                 change-sound="sound: #Sound_Pink">
+
+        </a-sphere>
+        <a-light light="type:  point;  
+                        intensity:  0.2;  
+                        color:  #F6528B"
+                 position="5 5 -7"
+                 distance="0">
+        </a-light>
+        </a-entity>
+
+        <!--Camera-->
+        <a-entity position="0 0 5">
+            <a-camera user-height="1.6"
+                      active="true">
+            </a-camera>
+        </a-entity>
+    </a-scene>
 </body>
 </html>
